@@ -10,11 +10,23 @@
  * @property {string} description
  */
 
+function Spell(name,cost,description){
+   this.name = name;
+   this.cost = cost;
+   this.description = description;
+//console.log(this.damage);
+}
+
+ 
   /**
    * Print out all spell details and format it nicely.
    * The format doesnt matter, as long as it contains the spell name, cost, and description.
    * @name printDetails
    */
+Spell.prototype.printDetails = function(){
+         console.log( this.name + " will possess you and surround you with " + this.cost +
+         " of them and " + this.description);
+};
 
 /**
  * A spell that deals damage.
@@ -40,6 +52,33 @@
  * @property {number} damage
  * @property {string} description
  */
+                 
+ var damageSpell = new DamageSpell('Rays', 5,10,'Conjures a ball of fire.');
+
+function DamageSpell(name,cost,damage,description){
+   
+   this.damage = damage;
+   
+
+   Spell.call(this,name,cost,description);
+
+  
+   
+
+}
+
+
+
+ //var damageSpell = new DamageSpell('Damage Spell', 23, 4, 'Deals damage.');
+
+DamageSpell.prototype= Object.create(Spell.prototype,{ constructor: {
+
+   value : Spell
+}});
+
+
+
+
 
 /**
  * Now that you've created some spells, let's create
@@ -73,6 +112,47 @@
    * @param  {number} cost      The amount of mana to spend.
    * @return {boolean} success  Whether mana was successfully spent.
    */
+
+function Spellcaster(name,health,mana){
+   this.name = name;
+   this.health = health;
+   this.mana = mana;
+
+}
+
+var spellCast = new Spellcaster("Roro",34,43);
+
+
+
+Spellcaster.prototype.isAlive = true;
+
+
+Spellcaster.prototype.inflictDamage = function(damage){
+
+   this.health -= damage;
+
+   if(damage > 0 && damage<this.health){
+       
+
+      this.isAlive = true ;
+
+   }
+
+   else if(damage > this.health){
+      this.isAlive = false;
+      this.health =0;
+   }
+   else 
+      this.isAlive = false;
+
+};
+
+
+
+
+   
+
+
 
   /**
    * Allows the spellcaster to cast spells.
