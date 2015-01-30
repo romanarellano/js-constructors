@@ -147,6 +147,36 @@ Spellcaster.prototype.inflictDamage = function(damage){
 
 };
 
+Spellcaster.prototype.spendMana = function(spent){
+   
+   
+
+   if(this.mana > spent){
+      this.mana -= spent;
+      return true;
+      
+   }
+   else return false;
+
+};
+
+Spellcaster.prototype.invoke = function(Spell){
+
+   if(Spell === undefined || Spell === null){
+
+      return  false;
+   }
+
+   else if(typeof Spell == 'object'){
+
+      if(Spell.cost > this.mana){
+         return false;
+      }
+       this.mana -= Spell.cost;
+   }
+   return true;
+   
+   };
 
 
 
