@@ -151,32 +151,45 @@ Spellcaster.prototype.spendMana = function(spent){
    
    
 
-   if(this.mana > spent){
+   if((this.mana -spent) >=0){
       this.mana -= spent;
       return true;
       
    }
-   else return false;
+   else {
 
+      return false;
+}
 };
 
-Spellcaster.prototype.invoke = function(Spell){
 
-   if(Spell === undefined || Spell === null){
+Spellcaster.prototype.invoke = function (spell, target) {
+   if ((spell instanceof DamageSpell) && (target instanceof Spellcaster)) {
+      if (this.spendMana(spell.cost)) {
+         target.inflictDamage(spell.damage);
+         return true;
+      } else {
+         return false;
+      }
+   } else if ((spell instanceof DamageSpell) && !(target instanceof Spellcaster)) {
+         return false;
+   } else if (spell instanceof Spell) {
+         if (this.spendMana(spell.cost)) {
+         return true;
+         } else {
+         return false;
+      }
+   } else {
+         return false;
+      }
+   };
 
-      return  false;
-   }
 
-   else if(typeof Spell == 'object'){
 
-      if(Spell.cost > this.mana){
-         return false;
-      }
-       this.mana -= Spell.cost;
-   }
-   return true;
    
-   };
+
+   
+   
 
 
 
